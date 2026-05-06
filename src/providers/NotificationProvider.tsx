@@ -4,7 +4,15 @@ import { usePrimaryPage } from '@/PageManager'
 import notificationService from '@/services/notification.service'
 import storage from '@/services/local-storage.service'
 import { NostrEvent } from 'nostr-tools'
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react'
 import { useNostr } from './NostrProvider'
 
 type TNotificationContext = {
@@ -32,6 +40,7 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
   const [readNotificationIdSet, setReadNotificationIdSet] = useState<Set<string>>(new Set())
   const [filteredNewNotifications, setFilteredNewNotifications] = useState<NostrEvent[]>([])
   const { unreadCount: dmUnreadCount } = useDmUnread()
+  const wasActiveRef = useRef(false)
 
   useEffect(() => {
     if (!pubkey) {
@@ -47,7 +56,15 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
   }, [pubkey])
 
   useEffect(() => {
-    updateNotificationsSeenAt(!active)
+    if (active) {
+      wasActiveRef.current = true
+      return
+    }
+    if (wasActiveRef.current) {
+      wasActiveRef.current = false
+      updateNotificationsSeenAt()
+      setReadNotificationIdSet(new Set())
+    }
   }, [active])
 
   useEffect(() => {

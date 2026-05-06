@@ -860,9 +860,7 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
 
     const now = dayjs().unix()
     storage.setLastReadNotificationTime(account.pubkey, now)
-    setTimeout(() => {
-      setNotificationsSeenAt(now)
-    }, 5_000)
+    setNotificationsSeenAt(now)
 
     // Prevent too frequent requests for signing seen notifications events
     const lastPublishedSeenNotificationsAtEventAt =
