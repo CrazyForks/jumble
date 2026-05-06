@@ -1,15 +1,16 @@
-import { ExtendedKind, NOTIFICATION_LIST_STYLE, SPECIAL_TRUST_SCORE_FILTER_ID } from '@/constants'
+import { ExtendedKind, SPECIAL_TRUST_SCORE_FILTER_ID } from '@/constants'
 import { useInfiniteScroll } from '@/hooks'
 import { useNotificationFilter } from '@/hooks/useNotificationFilter'
-import { isTouchDevice } from '@/lib/utils'
+import { cn, isTouchDevice } from '@/lib/utils'
 import { usePrimaryPage } from '@/PageManager'
+import { useDeepBrowsing } from '@/providers/DeepBrowsingProvider'
 import { useNostr } from '@/providers/NostrProvider'
 import { useNotification } from '@/providers/NotificationProvider'
-import { useUserPreferences } from '@/providers/UserPreferencesProvider'
 import notificationService from '@/services/notification.service'
 import { TNotificationType } from '@/types'
+import dayjs from 'dayjs'
 import { NostrEvent, kinds } from 'nostr-tools'
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import PullToRefresh from '../PullToRefresh'
 import { LoadingBar } from '../LoadingBar'
@@ -27,7 +28,6 @@ export default function NotificationList() {
   const { current } = usePrimaryPage()
   const { pubkey } = useNostr()
   const { getNotificationsSeenAt } = useNotification()
-  const { notificationListStyle } = useUserPreferences()
   const filterFn = useNotificationFilter()
   const [notificationType, setNotificationType] = useState<TNotificationType>('all')
   const [lastReadTime, setLastReadTime] = useState(0)
@@ -126,6 +126,8 @@ export default function NotificationList() {
     initialLoading
   })
 
+  const groupedNotifications = useMemo(() => groupNotifications(visibleItems), [visibleItems])
+
   const refresh = () => {
     topRef.current?.scrollIntoView({ behavior: 'instant', block: 'start' })
     setTimeout(() => {
@@ -136,13 +138,17 @@ export default function NotificationList() {
   const list = (
     <div>
       {initialLoading && shouldShowLoadingIndicator && <LoadingBar />}
-      <div className={notificationListStyle === NOTIFICATION_LIST_STYLE.COMPACT ? 'mb-2' : ''} />
-      {visibleItems.map((notification) => (
-        <NotificationItem
-          key={notification.id}
-          notification={notification}
-          isNew={notification.created_at > lastReadTime}
-        />
+      {groupedNotifications.map((group) => (
+        <Fragment key={group.key}>
+          <NotificationGroupHeader label={group.label} />
+          {group.items.map((notification) => (
+            <NotificationItem
+              key={notification.id}
+              notification={notification}
+              isNew={notification.created_at > lastReadTime}
+            />
+          ))}
+        </Fragment>
       ))}
       <div ref={bottomRef} />
       <div className="text-muted-foreground text-center text-sm">
@@ -186,6 +192,56 @@ export default function NotificationList() {
       >
         {list}
       </PullToRefresh>
+    </div>
+  )
+}
+
+type TNotificationGroupKey = 'today' | 'week' | 'month' | 'earlier'
+
+const GROUP_LABELS: Record<TNotificationGroupKey, string> = {
+  today: 'Today',
+  week: 'This week',
+  month: 'This month',
+  earlier: 'Earlier'
+}
+
+function groupNotifications(events: NostrEvent[]) {
+  const now = dayjs()
+  const todayStart = now.startOf('day').unix()
+  const weekStart = now.startOf('week').unix()
+  const monthStart = now.startOf('month').unix()
+
+  const groups: { key: TNotificationGroupKey; label: string; items: NostrEvent[] }[] = []
+  let current: { key: TNotificationGroupKey; label: string; items: NostrEvent[] } | null = null
+
+  for (const evt of events) {
+    let key: TNotificationGroupKey
+    if (evt.created_at >= todayStart) key = 'today'
+    else if (evt.created_at >= weekStart) key = 'week'
+    else if (evt.created_at >= monthStart) key = 'month'
+    else key = 'earlier'
+
+    if (!current || current.key !== key) {
+      current = { key, label: GROUP_LABELS[key], items: [] }
+      groups.push(current)
+    }
+    current.items.push(evt)
+  }
+  return groups
+}
+
+function NotificationGroupHeader({ label }: { label: string }) {
+  const { t } = useTranslation()
+  const { deepBrowsing } = useDeepBrowsing()
+
+  return (
+    <div
+      className={cn(
+        'bg-border text-muted-foreground sticky z-20 border-b px-4 py-1 text-sm font-semibold backdrop-blur-md transition-[top] duration-300',
+        deepBrowsing ? 'top-12' : 'top-24.25'
+      )}
+    >
+      {t(label)}
     </div>
   )
 }

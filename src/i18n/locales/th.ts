@@ -828,6 +828,10 @@ export default {
     'Banner URL': 'URL แบนเนอร์',
     'Try the desktop app': 'ลองใช้แอปเดสก์ท็อป',
     'No browser relay connection limit, for a better following feed experience.':
-      'ไม่จำกัดการเชื่อมต่อรีเลย์ในเบราว์เซอร์ เพื่อประสบการณ์ฟีดติดตามที่ดีขึ้น'
+      'ไม่จำกัดการเชื่อมต่อรีเลย์ในเบราว์เซอร์ เพื่อประสบการณ์ฟีดติดตามที่ดีขึ้น',
+    Today: 'วันนี้',
+    'This week': 'สัปดาห์นี้',
+    'This month': 'เดือนนี้',
+    Earlier: 'ก่อนหน้า'
   }
 }

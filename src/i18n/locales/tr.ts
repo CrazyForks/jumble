@@ -851,6 +851,10 @@ export default {
     'Banner URL': 'Banner URL’si',
     'Try the desktop app': 'Masaüstü uygulamasını deneyin',
     'No browser relay connection limit, for a better following feed experience.':
-      'Tarayıcı relay bağlantı limiti yok, daha iyi takip akışı deneyimi için.'
+      'Tarayıcı relay bağlantı limiti yok, daha iyi takip akışı deneyimi için.',
+    Today: 'Bugün',
+    'This week': 'Bu hafta',
+    'This month': 'Bu ay',
+    Earlier: 'Daha eski'
   }
 }

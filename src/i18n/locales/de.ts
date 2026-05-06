@@ -855,6 +855,10 @@ export default {
     'Banner URL': 'Banner-URL',
     'Try the desktop app': 'Desktop-App ausprobieren',
     'No browser relay connection limit, for a better following feed experience.':
-      'Keine Browser-Begrenzung für Relay-Verbindungen, für ein besseres Folgende-Feed-Erlebnis.'
+      'Keine Browser-Begrenzung für Relay-Verbindungen, für ein besseres Folgende-Feed-Erlebnis.',
+    Today: 'Heute',
+    'This week': 'Diese Woche',
+    'This month': 'Diesen Monat',
+    Earlier: 'Früher'
   }
 }

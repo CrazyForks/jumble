@@ -810,6 +810,10 @@ export default {
     'Banner URL': '橫幅連結',
     'Try the desktop app': '試試桌面版',
     'No browser relay connection limit, for a better following feed experience.':
-      '不受瀏覽器中繼連接數限制，追蹤 feed 體驗更好。'
+      '不受瀏覽器中繼連接數限制，追蹤 feed 體驗更好。',
+    Today: '今天',
+    'This week': '本週',
+    'This month': '本月',
+    Earlier: '更早'
   }
 }

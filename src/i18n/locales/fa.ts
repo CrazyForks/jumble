@@ -842,6 +842,10 @@ export default {
     'Banner URL': 'نشانی تصویر سربرگ',
     'Try the desktop app': 'اپلیکیشن دسکتاپ را امتحان کنید',
     'No browser relay connection limit, for a better following feed experience.':
-      'بدون محدودیت اتصال رله در مرورگر، برای تجربهٔ بهتر در فید دنبال‌شده‌ها.'
+      'بدون محدودیت اتصال رله در مرورگر، برای تجربهٔ بهتر در فید دنبال‌شده‌ها.',
+    Today: 'امروز',
+    'This week': 'این هفته',
+    'This month': 'این ماه',
+    Earlier: 'قدیمی‌تر'
   }
 }

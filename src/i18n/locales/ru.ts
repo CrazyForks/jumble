@@ -847,6 +847,10 @@ export default {
     'Banner URL': 'URL баннера',
     'Try the desktop app': 'Попробуйте десктопное приложение',
     'No browser relay connection limit, for a better following feed experience.':
-      'Без ограничения подключений к ретрансляторам в браузере, для лучшего опыта в ленте подписок.'
+      'Без ограничения подключений к ретрансляторам в браузере, для лучшего опыта в ленте подписок.',
+    Today: 'Сегодня',
+    'This week': 'На этой неделе',
+    'This month': 'В этом месяце',
+    Earlier: 'Ранее'
   }
 }

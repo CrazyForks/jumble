@@ -838,6 +838,10 @@ export default {
     'Banner URL': 'Borítókép URL',
     'Try the desktop app': 'Próbáld ki az asztali alkalmazást',
     'No browser relay connection limit, for a better following feed experience.':
-      'Nincs böngészős csomópont-kapcsolati korlát, jobb követések feed élményért.'
+      'Nincs böngészős csomópont-kapcsolati korlát, jobb követések feed élményért.',
+    Today: 'Ma',
+    'This week': 'Ezen a héten',
+    'This month': 'Ebben a hónapban',
+    Earlier: 'Korábbi'
   }
 }

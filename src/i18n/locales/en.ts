@@ -849,6 +849,10 @@ export default {
       'Updates are not available in development mode',
     'Try the desktop app': 'Try the desktop app',
     'No browser relay connection limit, for a better following feed experience.':
-      'No browser relay connection limit, for a better following feed experience.'
+      'No browser relay connection limit, for a better following feed experience.',
+    Today: 'Today',
+    'This week': 'This week',
+    'This month': 'This month',
+    Earlier: 'Earlier'
   }
 }

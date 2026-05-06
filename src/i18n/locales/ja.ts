@@ -841,6 +841,10 @@ export default {
     'Banner URL': 'バナーの URL',
     'Try the desktop app': 'デスクトップアプリを試す',
     'No browser relay connection limit, for a better following feed experience.':
-      'ブラウザのリレイ接続数制限なし、フォロー中フィードの体験が向上します。'
+      'ブラウザのリレイ接続数制限なし、フォロー中フィードの体験が向上します。',
+    Today: '今日',
+    'This week': '今週',
+    'This month': '今月',
+    Earlier: 'それ以前'
   }
 }

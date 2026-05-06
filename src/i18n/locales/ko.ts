@@ -834,6 +834,10 @@ export default {
     'Banner URL': '배너 URL',
     'Try the desktop app': '데스크톱 앱 사용해보기',
     'No browser relay connection limit, for a better following feed experience.':
-      '브라우저의 릴레이 연결 수 제한 없음, 더 나은 팔로잉 피드 경험을 위해.'
+      '브라우저의 릴레이 연결 수 제한 없음, 더 나은 팔로잉 피드 경험을 위해.',
+    Today: '오늘',
+    'This week': '이번 주',
+    'This month': '이번 달',
+    Earlier: '이전'
   }
 }

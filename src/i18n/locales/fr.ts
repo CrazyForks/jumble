@@ -852,6 +852,10 @@ export default {
     'Banner URL': 'URL de la bannière',
     'Try the desktop app': "Essayer l'application de bureau",
     'No browser relay connection limit, for a better following feed experience.':
-      "Pas de limite de connexions aux relais du navigateur, pour une meilleure expérience du flux d'abonnements."
+      "Pas de limite de connexions aux relais du navigateur, pour une meilleure expérience du flux d'abonnements.",
+    Today: "Aujourd'hui",
+    'This week': 'Cette semaine',
+    'This month': 'Ce mois-ci',
+    Earlier: 'Plus ancien'
   }
 }

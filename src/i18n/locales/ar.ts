@@ -828,6 +828,10 @@ export default {
     'Banner URL': 'رابط صورة الغلاف',
     'Try the desktop app': 'جرّب تطبيق سطح المكتب',
     'No browser relay connection limit, for a better following feed experience.':
-      'لا يوجد حد لاتصالات الريلاي في المتصفح، لتجربة أفضل في موجز المتابَعين.'
+      'لا يوجد حد لاتصالات الريلاي في المتصفح، لتجربة أفضل في موجز المتابَعين.',
+    Today: 'اليوم',
+    'This week': 'هذا الأسبوع',
+    'This month': 'هذا الشهر',
+    Earlier: 'الأقدم'
   }
 }

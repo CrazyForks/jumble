@@ -842,6 +842,10 @@ export default {
     'Banner URL': 'बैनर URL',
     'Try the desktop app': 'डेस्कटॉप ऐप आज़माएँ',
     'No browser relay connection limit, for a better following feed experience.':
-      'ब्राउज़र की रिले कनेक्शन सीमा नहीं, बेहतर फ़ॉलोइंग फ़ीड अनुभव के लिए।'
+      'ब्राउज़र की रिले कनेक्शन सीमा नहीं, बेहतर फ़ॉलोइंग फ़ीड अनुभव के लिए।',
+    Today: 'आज',
+    'This week': 'इस सप्ताह',
+    'This month': 'इस महीने',
+    Earlier: 'पहले'
   }
 }

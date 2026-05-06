@@ -850,6 +850,10 @@ export default {
     'Banner URL': 'URL banera',
     'Try the desktop app': 'Wypróbuj aplikację na komputer',
     'No browser relay connection limit, for a better following feed experience.':
-      'Brak limitu połączeń transmiterów w przeglądarce, dla lepszego odczytu obserwowanych.'
+      'Brak limitu połączeń transmiterów w przeglądarce, dla lepszego odczytu obserwowanych.',
+    Today: 'Dziś',
+    'This week': 'W tym tygodniu',
+    'This month': 'W tym miesiącu',
+    Earlier: 'Wcześniej'
   }
 }

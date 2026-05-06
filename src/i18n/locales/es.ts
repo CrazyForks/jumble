@@ -846,6 +846,10 @@ export default {
     'Banner URL': 'URL del banner',
     'Try the desktop app': 'Prueba la app de escritorio',
     'No browser relay connection limit, for a better following feed experience.':
-      'Sin límite de conexiones a relés del navegador, para una mejor experiencia en el feed de Siguiendo.'
+      'Sin límite de conexiones a relés del navegador, para una mejor experiencia en el feed de Siguiendo.',
+    Today: 'Hoy',
+    'This week': 'Esta semana',
+    'This month': 'Este mes',
+    Earlier: 'Anterior'
   }
 }
