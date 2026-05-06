@@ -32,7 +32,7 @@ import {
   useState
 } from 'react'
 import { useTranslation } from 'react-i18next'
-import PullToRefresh from 'react-simple-pull-to-refresh'
+import PullToRefresh from '../PullToRefresh'
 import { toast } from 'sonner'
 import { LoadingBar } from '../LoadingBar'
 import NewNotesButton from '../NewNotesButton'
@@ -92,7 +92,6 @@ const UserAggregationList = forwardRef<
     const [refreshCount, setRefreshCount] = useState(0)
     const [showCount, setShowCount] = useState(SHOW_COUNT)
     const [hasMore, setHasMore] = useState(true)
-    const supportTouch = useMemo(() => isTouchDevice(), [])
     const feedId = useMemo(() => {
       return userAggregationService.getFeedId(subRequests, showKinds)
     }, [JSON.stringify(subRequests), JSON.stringify(showKinds)])
@@ -487,19 +486,14 @@ const UserAggregationList = forwardRef<
             {t('Load earlier')}
           </Button>
         </div>
-        {supportTouch ? (
-          <PullToRefresh
-            onRefresh={async () => {
-              refresh()
-              await new Promise((resolve) => setTimeout(resolve, 1000))
-            }}
-            pullingContent=""
-          >
-            {list}
-          </PullToRefresh>
-        ) : (
-          list
-        )}
+        <PullToRefresh
+          onRefresh={async () => {
+            refresh()
+            await new Promise((resolve) => setTimeout(resolve, 1000))
+          }}
+        >
+          {list}
+        </PullToRefresh>
         <div className="h-20" />
         {filteredNewEvents.length > 0 && (
           <NewNotesButton newEvents={filteredNewEvents} onClick={showNewEvents} />

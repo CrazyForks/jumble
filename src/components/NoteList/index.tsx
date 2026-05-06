@@ -5,7 +5,6 @@ import { useInfiniteScroll } from '@/hooks/useInfiniteScroll'
 import { getEventKey, getKeyFromTag, isMentioningMutedUsers, isReplyNoteEvent } from '@/lib/event'
 import { tagNameEquals } from '@/lib/tag'
 import { mergeTimelines } from '@/lib/timeline'
-import { isTouchDevice } from '@/lib/utils'
 import { useContentPolicy } from '@/providers/ContentPolicyProvider'
 import { useDeletedEvent } from '@/providers/DeletedEventProvider'
 import { useMuteList } from '@/providers/MuteListProvider'
@@ -28,7 +27,7 @@ import {
   useState
 } from 'react'
 import { useTranslation } from 'react-i18next'
-import PullToRefresh from 'react-simple-pull-to-refresh'
+import PullToRefresh from '../PullToRefresh'
 import { toast } from 'sonner'
 import { LoadingBar } from '../LoadingBar'
 import NoteCard, { NoteCardLoadingSkeleton } from '../NoteCard'
@@ -97,7 +96,6 @@ const NoteList = forwardRef<
     >([])
     const [filteredNewEvents, setFilteredNewEvents] = useState<Event[]>([])
     const [refreshCount, setRefreshCount] = useState(0)
-    const supportTouch = useMemo(() => isTouchDevice(), [])
     const topRef = useRef<HTMLDivElement | null>(null)
     const sinceRef = useRef<number | undefined>(undefined)
     sinceRef.current = newEvents.length
@@ -498,10 +496,10 @@ const NoteList = forwardRef<
         {shouldShowLoadingIndicator || filtering || initialLoading ? (
           <NoteCardLoadingSkeleton />
         ) : events.length ? (
-          <div className="mt-2 text-center text-sm text-muted-foreground">{t('no more notes')}</div>
+          <div className="text-muted-foreground mt-2 text-center text-sm">{t('no more notes')}</div>
         ) : (
           <div className="mt-8 flex w-full flex-col items-center justify-center gap-4">
-            <div className="text-center text-muted-foreground">
+            <div className="text-muted-foreground text-center">
               <div className="text-lg font-medium">{t('No notes found')}</div>
               <div className="mt-1 text-sm">{t('Try again later or check your connection')}</div>
             </div>
@@ -515,20 +513,15 @@ const NoteList = forwardRef<
 
     return (
       <div>
-        <div ref={topRef} className="scroll-mt-[calc(6rem+1px)]" />
-        {supportTouch ? (
-          <PullToRefresh
-            onRefresh={async () => {
-              refresh()
-              await new Promise((resolve) => setTimeout(resolve, 1000))
-            }}
-            pullingContent=""
-          >
-            {list}
-          </PullToRefresh>
-        ) : (
-          list
-        )}
+        <div ref={topRef} className="scroll-mt-24.25" />
+        <PullToRefresh
+          onRefresh={async () => {
+            refresh()
+            await new Promise((resolve) => setTimeout(resolve, 1000))
+          }}
+        >
+          {list}
+        </PullToRefresh>
         <div className="h-20" />
         {filteredNewEvents.length > 0 && (
           <NewNotesButton newEvents={filteredNewEvents} onClick={showNewEvents} />

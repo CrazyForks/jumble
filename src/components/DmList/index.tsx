@@ -39,7 +39,7 @@ import { MessageSquare, Trash2 } from 'lucide-react'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { useTranslation } from 'react-i18next'
-import PullToRefresh from 'react-simple-pull-to-refresh'
+import PullToRefresh from '@/components/PullToRefresh'
 
 type TDmTab = 'messages' | 'requests'
 
@@ -204,24 +204,15 @@ export default function DmList() {
         }
         active={trustFilterOpen}
       />
-      {supportTouch ? (
-        <PullToRefresh isPullable={isPullable} onRefresh={refresh} pullingContent="">
-          <ConversationListContent
-            filteredConversations={filteredConversations}
-            activeTab={activeTab}
-            onConversationClick={handleConversationClick}
-            onDelete={(conv) => setDeleteTarget(conv)}
-            onSwipeStateChange={setIsPullable}
-          />
-        </PullToRefresh>
-      ) : (
+      <PullToRefresh isPullable={isPullable} onRefresh={refresh}>
         <ConversationListContent
           filteredConversations={filteredConversations}
           activeTab={activeTab}
           onConversationClick={handleConversationClick}
           onDelete={(conv) => setDeleteTarget(conv)}
+          onSwipeStateChange={setIsPullable}
         />
-      )}
+      </PullToRefresh>
       <DeleteConversationConfirmation
         open={!!deleteTarget}
         setOpen={(open) => {

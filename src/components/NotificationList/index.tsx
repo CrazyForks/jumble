@@ -11,7 +11,7 @@ import { TNotificationType } from '@/types'
 import { NostrEvent, kinds } from 'nostr-tools'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import PullToRefresh from 'react-simple-pull-to-refresh'
+import PullToRefresh from '../PullToRefresh'
 import { LoadingBar } from '../LoadingBar'
 import { RefreshButton } from '../RefreshButton'
 import Tabs from '../Tabs'
@@ -178,19 +178,14 @@ export default function NotificationList() {
         }
       />
       <div ref={topRef} className="scroll-mt-24.25" />
-      {supportTouch ? (
-        <PullToRefresh
-          onRefresh={async () => {
-            refresh()
-            await new Promise((resolve) => setTimeout(resolve, 1000))
-          }}
-          pullingContent=""
-        >
-          {list}
-        </PullToRefresh>
-      ) : (
-        list
-      )}
+      <PullToRefresh
+        onRefresh={async () => {
+          refresh()
+          await new Promise((resolve) => setTimeout(resolve, 1000))
+        }}
+      >
+        {list}
+      </PullToRefresh>
     </div>
   )
 }
