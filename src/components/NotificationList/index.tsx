@@ -168,6 +168,7 @@ export default function NotificationList() {
         onTabChange={(type) => {
           setShowCount(SHOW_COUNT)
           setNotificationType(type as TNotificationType)
+          topRef.current?.scrollIntoView({ behavior: 'instant', block: 'start' })
         }}
         options={
           <>
