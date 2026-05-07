@@ -760,6 +760,10 @@ class LocalStorageService {
 
   removeAccount(account: TAccount) {
     this.accounts = this.accounts.filter((act) => !isSameAccount(act, account))
+    if (isSameAccount(this.currentAccount, account)) {
+      this.currentAccount = null
+      this.persistCurrentAccountToLocalStorage()
+    }
     delete this.nsecByPubkey[account.pubkey]
     delete this.ncryptsecByPubkey[account.pubkey]
     delete this.bunkerClientSecretByPubkey[account.pubkey]
@@ -769,7 +773,7 @@ class LocalStorageService {
   }
 
   switchAccount(account: TAccount | null) {
-    if (isSameAccount(this.currentAccount, account)) {
+    if (!account) {
       return
     }
     const act = this.accounts.find((a) => isSameAccount(a, account))

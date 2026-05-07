@@ -18,8 +18,7 @@ const NoteListPage = forwardRef<TPageRef>((_, ref) => {
   const { t } = useTranslation()
   const { addRelayUrls, removeRelayUrls } = useCurrentRelays()
   const layoutRef = useRef<TPageRef>(null)
-  const { pubkey } = useNostr()
-  const { feedInfo, relayUrls, isReady, switchFeed } = useFeed()
+  const { feedInfo, relayUrls, isReady } = useFeed()
   const [showRelayDetails, setShowRelayDetails] = useState(false)
 
   useImperativeHandle(ref, () => layoutRef.current as TPageRef)
@@ -42,16 +41,10 @@ const NoteListPage = forwardRef<TPageRef>((_, ref) => {
   let content: React.ReactNode = null
   if (!isReady) {
     content = (
-      <div className="pt-3 text-center text-sm text-muted-foreground">{t('loading...')}</div>
+      <div className="text-muted-foreground pt-3 text-center text-sm">{t('loading...')}</div>
     )
   } else if (!feedInfo) {
     content = <WelcomeGuide />
-  } else if (feedInfo.feedType === 'following' && !pubkey) {
-    switchFeed(null)
-    return null
-  } else if (feedInfo.feedType === 'pinned' && !pubkey) {
-    switchFeed(null)
-    return null
   } else if (feedInfo.feedType === 'following') {
     content = <FollowingFeed />
   } else if (feedInfo.feedType === 'pinned') {
@@ -119,7 +112,7 @@ function WelcomeGuide() {
           <h2 className="text-2xl font-bold">{t('Welcome to Jumble')}</h2>
           <Sparkles className="text-yellow-400" />
         </div>
-        <p className="max-w-md text-muted-foreground">
+        <p className="text-muted-foreground max-w-md">
           {t(
             'Jumble is a client focused on browsing relays. Get started by exploring interesting relays or login to view your following feed.'
           )}
