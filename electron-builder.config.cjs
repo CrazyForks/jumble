@@ -33,7 +33,10 @@ module.exports = {
     entitlementsInherit: 'build/entitlements.mac.plist',
     identity: hasMacSigningCert ? 'Developer ID Application' : null,
     notarize: hasAppleNotarizeCreds,
-    target: [{ target: 'dmg', arch: ['arm64'] }],
+    target: [
+      { target: 'dmg', arch: ['arm64'] },
+      { target: 'zip', arch: ['arm64'] }
+    ],
     icon: 'public/pwa-512x512.png'
   },
   win: {
