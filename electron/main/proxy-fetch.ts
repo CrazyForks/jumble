@@ -45,6 +45,7 @@ export async function proxyFetch(
     const reader = res.body?.getReader()
     const chunks: Uint8Array[] = []
     let total = 0
+    let oversize = false
     if (reader) {
       while (true) {
         const { done, value } = await reader.read()
@@ -52,10 +53,24 @@ export async function proxyFetch(
         if (!value) continue
         total += value.byteLength
         if (total > MAX_BODY_BYTES) {
+          oversize = true
           await reader.cancel()
-          throw new Error('Response body exceeds size limit')
+          controller.abort()
+          break
         }
         chunks.push(value)
+      }
+    }
+
+    if (oversize) {
+      console.warn(`[proxy-fetch] aborted: body exceeds ${MAX_BODY_BYTES} bytes ${url}`)
+      return {
+        ok: false,
+        status: 0,
+        statusText: 'Response body exceeds size limit',
+        url: res.url,
+        headers: {},
+        body: ''
       }
     }
 

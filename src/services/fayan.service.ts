@@ -21,12 +21,10 @@ class FayanService {
           },
           body: JSON.stringify({ pubkeys })
         })
-        console.log('FayanService userPercentileDataLoader fetched', pubkeys)
         if (!res.ok) {
           return new Array(pubkeys.length).fill(null)
         }
         const data = JSON.parse(res.body)
-        console.log('FayanService userPercentileDataLoader response', data)
         return pubkeys.map((pubkey) => data[pubkey]?.percentile ?? 0)
       } catch {
         return new Array(pubkeys.length).fill(null)
