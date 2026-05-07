@@ -1,3 +1,4 @@
+import { proxyFetch } from '@/lib/proxy-fetch'
 import { TWebMetadata } from '@/types'
 import DataLoader from 'dataloader'
 
@@ -24,11 +25,13 @@ class WebService {
 
   private async fetchOne(url: string): Promise<TWebMetadata> {
     try {
-      const res = await fetch(url, { headers: { accept: 'text/html,application/xhtml+xml' } })
+      const res = await proxyFetch(url, {
+        headers: { accept: 'text/html,application/xhtml+xml' }
+      })
       if (!res.ok) return {}
-      const ct = res.headers.get('content-type') ?? ''
+      const ct = res.headers['content-type'] ?? ''
       if (!ct.includes('text/html') && !ct.includes('application/xhtml')) return {}
-      const html = await res.text()
+      const html = res.body
       if (!html) return {}
 
       const parser = new DOMParser()

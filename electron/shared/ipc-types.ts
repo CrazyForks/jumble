@@ -21,7 +21,8 @@ export const IPC_CHANNELS = {
   updateInstall: 'update:install',
   updateGetState: 'update:get-state',
   updateState: 'update:state',
-  updateSetAuto: 'update:set-auto'
+  updateSetAuto: 'update:set-auto',
+  proxyFetch: 'proxy:fetch'
 } as const
 
 export type TSecretsBundle = {
@@ -122,8 +123,32 @@ export type TUpdateBridge = {
   setAutoUpdate: (enabled: boolean) => Promise<TUpdateState>
 }
 
+export type TProxyFetchOptions = {
+  method?: string
+  headers?: Record<string, string>
+  body?: string
+  /** Override the default 15s timeout. Clamped by the main process. */
+  timeoutMs?: number
+}
+
+export type TProxyFetchResponse = {
+  ok: boolean
+  status: number
+  statusText: string
+  /** Final URL after redirects */
+  url: string
+  headers: Record<string, string>
+  /** Response body decoded as UTF-8 text (HTML/JSON/etc.) */
+  body: string
+}
+
+export type TProxyBridge = {
+  fetch: (url: string, options?: TProxyFetchOptions) => Promise<TProxyFetchResponse>
+}
+
 export type TElectronBridge = {
   relay: TElectronRelayBridge
   secrets: TSecretsBridge
   update: TUpdateBridge
+  proxy: TProxyBridge
 }
