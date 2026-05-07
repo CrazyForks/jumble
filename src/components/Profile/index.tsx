@@ -74,11 +74,11 @@ export default function Profile({ id }: { id?: string }) {
         <div>
           <div className="relative mb-2 bg-cover bg-center">
             <Skeleton className="aspect-3/1 w-full rounded-none" />
-            <Skeleton className="absolute bottom-0 start-3 h-24 w-24 translate-y-1/2 rounded-full border-4 border-background" />
+            <Skeleton className="border-background absolute start-3 bottom-0 h-24 w-24 translate-y-1/2 rounded-full border-4" />
           </div>
         </div>
         <div className="px-4">
-          <Skeleton className="mb-1 mt-14 h-5 w-28" />
+          <Skeleton className="mt-14 mb-1 h-5 w-28" />
           <Skeleton className="my-1 mt-2 h-5 w-56 rounded-full" />
         </div>
       </>
@@ -136,24 +136,24 @@ export default function Profile({ id }: { id?: string }) {
               <TextWithEmojis
                 text={username}
                 emojis={emojis}
-                className="select-text truncate text-xl font-semibold"
+                className="truncate text-xl font-semibold select-text"
               />
               <TrustScoreBadge pubkey={pubkey} />
               {isFollowingYou && (
-                <div className="h-fit shrink-0 rounded-full bg-muted px-2 text-xs text-muted-foreground">
+                <div className="bg-muted text-muted-foreground h-fit shrink-0 rounded-full px-2 text-xs">
                   {t('Follows you')}
                 </div>
               )}
             </div>
             <Nip05 pubkey={pubkey} />
             {lightningAddress && (
-              <div className="flex select-text items-center gap-1 text-sm text-yellow-400">
+              <div className="flex items-center gap-1 text-sm text-yellow-400 select-text">
                 <Zap className="size-4 shrink-0" />
-                <div className="w-0 max-w-fit flex-1 truncate">{lightningAddress}</div>
+                <LightningAddressCopy lightningAddress={lightningAddress} />
               </div>
             )}
             {sp && (
-              <div className="flex select-text items-center gap-1 text-sm text-orange-500">
+              <div className="flex items-center gap-1 text-sm text-orange-500 select-text">
                 <Bitcoin className="size-4 shrink-0" />
                 <SpCopy sp={sp} />
                 <SpQrCode sp={sp} />
@@ -167,11 +167,11 @@ export default function Profile({ id }: { id?: string }) {
               <ProfileAbout
                 about={about}
                 emojis={emojis}
-                className="mt-2 select-text whitespace-pre-wrap text-wrap wrap-break-word"
+                className="mt-2 text-wrap wrap-break-word whitespace-pre-wrap select-text"
               />
             </Collapsible>
             {website && (
-              <div className="mt-2 flex select-text items-center gap-1 truncate text-primary">
+              <div className="text-primary mt-2 flex items-center gap-1 truncate select-text">
                 <Link size={14} className="shrink-0" />
                 <a
                   href={website}
@@ -197,7 +197,7 @@ export default function Profile({ id }: { id?: string }) {
             </div>
           </div>
         </div>
-        <div className="px-4 pb-0.5 pt-3.5">
+        <div className="px-4 pt-3.5 pb-0.5">
           <SearchInput
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
@@ -207,6 +207,23 @@ export default function Profile({ id }: { id?: string }) {
       </div>
       <ProfileFeed pubkey={pubkey} search={debouncedInput} />
     </>
+  )
+}
+
+function LightningAddressCopy({ lightningAddress }: { lightningAddress: string }) {
+  const [copied, setCopied] = useState(false)
+
+  const copy = () => {
+    navigator.clipboard.writeText(lightningAddress)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
+
+  return (
+    <div className="flex flex-1 cursor-pointer items-center gap-1" onClick={copy}>
+      <div className="w-0 max-w-fit flex-1 truncate">{lightningAddress}</div>
+      {copied ? <Check size={14} /> : <Copy size={14} />}
+    </div>
   )
 }
 
@@ -221,7 +238,7 @@ function SpCopy({ sp }: { sp: string }) {
   }
 
   return (
-    <div className="clickable flex w-fit items-center gap-1 font-mono text-xs" onClick={copy}>
+    <div className="flex w-fit cursor-pointer items-center gap-1" onClick={copy}>
       <div>{truncated}</div>
       {copied ? <Check size={14} /> : <Copy size={14} />}
     </div>
