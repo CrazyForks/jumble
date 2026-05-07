@@ -15,7 +15,7 @@ module.exports = {
     provider: 'github',
     owner: 'CodyTseng',
     repo: 'jumble',
-    releaseType: 'release'
+    releaseType: 'draft'
   },
   files: [
     'dist/**/*',
@@ -37,10 +37,7 @@ module.exports = {
     icon: 'public/pwa-512x512.png'
   },
   win: {
-    target: [
-      { target: 'nsis', arch: ['x64'] },
-      { target: 'portable', arch: ['x64'] }
-    ],
+    target: [{ target: 'nsis', arch: ['x64'] }],
     icon: 'public/pwa-512x512.png'
   },
   nsis: {
